@@ -31,14 +31,14 @@ jobs:
         with:
           node-version: 20
 
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
       - name: Build production site
         run: npm run build
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3

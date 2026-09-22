@@ -7,6 +7,7 @@ interface LogoUploadModalProps {
   isOpen: boolean;
   onClose: () => void;
   isAdmin?: boolean;
+  canChangeLogo?: boolean;
   onSuccessToast?: (msg: string) => void;
 }
 
@@ -14,8 +15,10 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
   isOpen,
   onClose,
   isAdmin = false,
+  canChangeLogo = false,
   onSuccessToast,
 }) => {
+  const hasPermission = Boolean(isAdmin || canChangeLogo);
   const [previewUrl, setPreviewUrl] = useState<string | null>(() => getStoredCustomLogo());
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -23,8 +26,8 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
   if (!isOpen) return null;
 
   const handleFileProcess = (file: File) => {
-    if (!isAdmin) {
-      alert('⚠️ តម្រូវឲ្យមានសិទ្ធិជា Admin ជាន់ខ្ពស់ទើបអាចប្តូរ Logo បាន!');
+    if (!hasPermission) {
+      alert('⚠️ តម្រូវឲ្យមានការអនុញ្ញាតពី Admin ទើបអាចប្តូរ Logo បាន!');
       return;
     }
     if (!file.type.startsWith('image/')) {
@@ -45,7 +48,7 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    if (!isAdmin) return;
+    if (!hasPermission) return;
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       handleFileProcess(e.dataTransfer.files[0]);
     }
@@ -53,7 +56,7 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    if (isAdmin) {
+    if (hasPermission) {
       setIsDragging(true);
     }
   };
@@ -63,7 +66,10 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
   };
 
   const handleSave = () => {
-    if (!isAdmin) return;
+    if (!hasPermission) {
+      alert('⚠️ លោកអ្នកមិនមានសិទ្ធិពី Admin ក្នុងការផ្លាស់ប្តូរ Logo ទេ!');
+      return;
+    }
     if (previewUrl) {
       saveStoredCustomLogo(previewUrl);
       onSuccessToast?.('🎉 បានកំណត់ Logo ផ្ទាល់ខ្លួនរបស់អ្នកដោយជោគជ័យ!');
@@ -72,7 +78,10 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
   };
 
   const handleResetDefault = () => {
-    if (!isAdmin) return;
+    if (!hasPermission) {
+      alert('⚠️ លោកអ្នកមិនមានសិទ្ធិពី Admin ក្នុងការផ្លាស់ប្តូរ Logo ទេ!');
+      return;
+    }
     clearStoredCustomLogo();
     setPreviewUrl(null);
     onSuccessToast?.('បានកំណត់ប្រើប្រាស់ Logo ដើមឡើងវិញ');
@@ -80,20 +89,20 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40">
+        <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold">
+            <div className="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold shrink-0">
               <Upload className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
                 ប្តូររូបសញ្ញា Logo ផ្ទាល់ខ្លួន (Custom Logo)
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">
                 ប្រើប្រាស់នៅលើ Website និងទម្រង់បោះពុម្ពសៀវភៅចំណងដៃ
               </p>
             </div>
@@ -108,22 +117,22 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-5">
-          {/* Admin Permission Warning */}
-          {!isAdmin && (
-            <div className="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-xl text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2.5">
-              <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto">
+          {/* Permission Warning if not allowed */}
+          {!hasPermission ? (
+            <div className="p-4 bg-rose-50/80 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 rounded-xl text-xs text-rose-900 dark:text-rose-200 flex items-start gap-3 shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-900/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+                <Lock className="w-4 h-4" />
+              </div>
               <div>
-                <p className="font-bold text-amber-800 dark:text-amber-300">សិទ្ធិត្រូវបានកំណត់ (Admin Only)</p>
-                <p className="text-[11px] text-amber-700 dark:text-amber-400 mt-0.5 leading-relaxed">
-                  តម្រូវឲ្យតែ <strong>Admin ជាន់ខ្ពស់</strong> ទើបមានសិទ្ធិផ្លាស់ប្តូររូបភាព Logo របស់ប្រព័ន្ធបាន។ គណនីរបស់អ្នកអាចត្រឹមតែមើលរូបភាពបច្ចុប្បន្នប៉ុណ្ណោះ។
+                <p className="font-bold text-rose-800 dark:text-rose-300 text-sm">សិទ្ធិត្រូវបានការពារ (Admin Permission Required)</p>
+                <p className="text-xs text-rose-700 dark:text-rose-400 mt-1 leading-relaxed">
+                  លោកអ្នកមិនមានការអនុញ្ញាតពី Admin ក្នុងការប្តូរ Logo របស់ប្រព័ន្ធឡើយ។ មានតែគណនី <strong>Admin</strong> ឬគណនីដែលទទួលបានការអនុញ្ញាតពី Admin តាមរយៈ Admin Panel ប៉ុណ្ណោះទើបអាចប្តូរ Logo បាន។
                 </p>
               </div>
             </div>
-          )}
-
-          {/* Drag & Drop Upload Zone */}
-          {isAdmin && (
+          ) : (
+            /* Drag & Drop Upload Zone (Only if permitted) */
             <div
               onDrop={handleDrop}
               onDragOver={handleDragOver}
@@ -209,17 +218,17 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
           <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 rounded-xl text-xs text-amber-900 dark:text-amber-300 space-y-1">
             <div className="font-semibold flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>ចំណាំងាយស្រួល៖</span>
+              <span>ចំណាំ៖</span>
             </div>
             <p className="text-[11px] leading-relaxed text-amber-800 dark:text-amber-400">
-              លោកអ្នកអាចជ្រើសរើសរូបភាព <span className="font-semibold">ChatGPT Image...png</span> ដែលបានទាញយករួច មកដាក់ទីនេះភ្លាមៗ នោះប្រព័ន្ធនឹងរក្សាទុក និងបង្ហាញគ្រប់ទំព័រជានិច្ច!
+              Logo នេះនឹងត្រូវបានប្រើប្រាស់លើ Website, សៀវភៅបោះពុម្ព, និងពេលទាញយកបន្ថែមទៅអេក្រង់ដើម (Add to Home Screen)។
             </p>
           </div>
         </div>
 
         {/* Footer */}
         <div className="flex items-center justify-between px-6 py-3.5 border-t border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40">
-          {isAdmin ? (
+          {hasPermission ? (
             <>
               <button
                 type="button"
@@ -254,9 +263,9 @@ export const LogoUploadModal: React.FC<LogoUploadModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors cursor-pointer"
+                className="px-5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-colors cursor-pointer"
               >
-                បិទផ្ទាំងនេះ
+                យល់ព្រម & បិទផ្ទាំងនេះ
               </button>
             </div>
           )}

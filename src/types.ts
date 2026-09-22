@@ -82,6 +82,7 @@ export interface UserPermissions {
   canExportPrint: boolean;         // បោះពុម្ព និងទាញយក Excel
   canViewStats: boolean;           // មើលតួលេខទឹកប្រាក់សរុប
   canManageUsers: boolean;         // Admin: កំណត់សិទ្ធិ និងគ្រប់គ្រងអ្នកប្រើ
+  canChangeLogo: boolean;          // Admin: សិទ្ធិប្តូរ និងកំណត់ Logo ផ្ទាល់ខ្លួនរបស់ប្រព័ន្ធ
 }
 
 export interface AppUser {

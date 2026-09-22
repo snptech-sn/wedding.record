@@ -735,11 +735,11 @@ export default function App() {
 
         {/* View Mode Navigation Tabs: Records Table vs Data Visualization */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 mt-2">
-          <div className="inline-flex p-1 bg-slate-100 dark:bg-slate-800/90 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-2xs">
+          <div className="inline-flex p-1 bg-slate-100 dark:bg-slate-800/90 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 shadow-2xs max-w-full overflow-x-auto">
             <button
               type="button"
               onClick={() => setActiveMainTab('RECORDS')}
-              className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
                 activeMainTab === 'RECORDS'
                   ? 'bg-white dark:bg-slate-900 text-rose-700 dark:text-rose-400 shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -761,7 +761,7 @@ export default function App() {
             <button
               type="button"
               onClick={() => setActiveMainTab('ANALYTICS')}
-              className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
                 activeMainTab === 'ANALYTICS'
                   ? 'bg-white dark:bg-slate-900 text-rose-700 dark:text-rose-400 shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -769,7 +769,7 @@ export default function App() {
             >
               <BarChart3 className="w-4 h-4 text-amber-500" />
               <span>ផ្ទាំងទិន្នន័យក្រាហ្វិក</span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-700/60">
+              <span className="hidden xs:inline text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-300/60 dark:border-amber-700/60">
                 Recharts
               </span>
             </button>
@@ -900,6 +900,7 @@ export default function App() {
         isOpen={isLogoModalOpen}
         onClose={() => setIsLogoModalOpen(false)}
         isAdmin={currentUser?.role === 'ADMIN'}
+        canChangeLogo={currentUser?.role === 'ADMIN' || currentUser?.permissions?.canChangeLogo}
       />
 
       {/* Mandatory Admin Security PIN & Change PIN Modal */}

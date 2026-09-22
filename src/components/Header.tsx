@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { WeddingLogo } from './WeddingLogo';
 import { LogoUploadModal } from './LogoUploadModal';
+import { PWAInstallButton } from './PWAInstallButton';
 import { AllTimeStats, EventItem, AppUser } from '../types';
 import { EVENT_TYPE_LABELS, formatCurrency, formatDateKhmer } from '../utils/formatters';
 import { ThemeMode } from '../utils/theme';
@@ -105,6 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
   const canViewStats = currentUser?.permissions.canViewStats ?? true;
   const canManageUsers = currentUser?.permissions.canManageUsers ?? (currentUser?.role === 'ADMIN');
   const isAdmin = currentUser?.role === 'ADMIN';
+  const canChangeLogo = Boolean(isAdmin || currentUser?.permissions?.canChangeLogo);
 
   return (
     <header className="bg-white dark:bg-slate-900 border-b border-rose-100/80 dark:border-slate-800 shadow-xs sticky top-0 z-30 transition-colors duration-200">
@@ -116,12 +118,12 @@ export const Header: React.FC<HeaderProps> = ({
           
           {/* Left Column: Brand & Event Selector */}
           <div className="flex flex-wrap items-center justify-between gap-2.5">
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              {/* Clickable Logo with Hover Badge ONLY for Senior Admin */}
-              {isAdmin ? (
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Clickable Logo with Hover Badge ONLY if permitted by Admin */}
+              {canChangeLogo ? (
                 <div
                   onClick={() => setLogoModalOpen(true)}
-                  title="ចុចដើម្បីប្តូររូប Logo ផ្ទាល់ខ្លួន (សម្រាប់តែ Admin ជាន់ខ្ពស់)"
+                  title="ចុចដើម្បីប្តូររូប Logo ផ្ទាល់ខ្លួន (មានការអនុញ្ញាតពី Admin)"
                   className="relative group cursor-pointer"
                 >
                   <WeddingLogo className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-xs transition-transform group-hover:scale-105" />
@@ -130,7 +132,12 @@ export const Header: React.FC<HeaderProps> = ({
                   </div>
                 </div>
               ) : (
-                <WeddingLogo className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-xs" />
+                <div
+                  title="រូបសញ្ញា Logo កម្មវិធី (សិទ្ធិកែប្រែត្រូវអនុញ្ញាតដោយ Admin)"
+                  className="relative cursor-default"
+                >
+                  <WeddingLogo className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-xs" />
+                </div>
               )}
               <div>
                 <div className="flex items-center gap-1.5 sm:gap-2">
@@ -140,12 +147,12 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100/80 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200/60 dark:border-rose-800/40">
                     Wedding Record System
                   </span>
-                  {isAdmin && (
+                  {canChangeLogo && (
                     <button
                       type="button"
                       onClick={() => setLogoModalOpen(true)}
                       className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-rose-700 dark:text-rose-300 hover:text-rose-900 hover:bg-rose-100/80 dark:hover:bg-rose-950/60 rounded-md transition-colors cursor-pointer border border-dashed border-rose-300 dark:border-rose-800/70"
-                      title="ប្តូររូប Logo របស់អ្នក (សម្រាប់ Admin ជាន់ខ្ពស់)"
+                      title="ប្តូររូប Logo របស់អ្នក (មានសិទ្ធិពី Admin)"
                     >
                       <Upload className="w-2.5 h-2.5 text-rose-500" />
                       <span>ប្តូរ Logo</span>
@@ -317,19 +324,22 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="w-6 h-6 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-2xs">
                 <TrendingUp className="w-3.5 h-3.5" />
               </div>
-              <div className="flex items-center gap-1.5 whitespace-nowrap">
-                <span className="font-semibold text-amber-900 dark:text-amber-300 hidden 2xl:inline">សរុប:</span>
+              <div className="flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
+                <span className="font-semibold text-amber-900 dark:text-amber-300 hidden xl:inline">សរុប:</span>
                 {canViewStats ? (
                   <>
                     <span className="font-bold text-emerald-700 dark:text-emerald-400">{formatCurrency(allTimeStats.totalPaidUSD, 'USD')}</span>
-                    <span className="text-slate-300 dark:text-slate-600">•</span>
-                    <span className="font-bold text-blue-700 dark:text-blue-400">{formatCurrency(allTimeStats.totalPaidKHR, 'KHR')}</span>
+                    <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
+                    <span className="font-bold text-blue-700 dark:text-blue-400 hidden sm:inline">{formatCurrency(allTimeStats.totalPaidKHR, 'KHR')}</span>
                   </>
                 ) : (
-                  <span className="font-medium text-slate-400">*** (Lock)</span>
+                  <span className="font-medium text-slate-400">***</span>
                 )}
               </div>
             </button>
+
+            {/* Group 1.5: PWA Install to Home Screen Button */}
+            <PWAInstallButton variant="header" />
 
             {/* Group 2: Tools & Export (Desktop Segmented Toolbar) */}
             <div className="hidden sm:inline-flex items-center h-9 p-0.5 bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-xl text-xs shadow-2xs">
@@ -415,6 +425,20 @@ export const Header: React.FC<HeaderProps> = ({
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)} />
                   <div className="absolute right-0 mt-1.5 w-56 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-1.5 z-50 animate-in fade-in zoom-in-95 text-xs">
+                    <PWAInstallButton variant="menuItem" className="mb-1" />
+                    {canChangeLogo && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          setLogoModalOpen(true);
+                        }}
+                        className="w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-rose-700 dark:text-rose-300 font-semibold"
+                      >
+                        <Upload className="w-4 h-4 text-rose-600" />
+                        <span>ប្តូររូប Logo ប្រព័ន្ធ</span>
+                      </button>
+                    )}
                     {onSelectMainTab && (
                       <button
                         type="button"
@@ -770,6 +794,7 @@ export const Header: React.FC<HeaderProps> = ({
         isOpen={logoModalOpen}
         onClose={() => setLogoModalOpen(false)}
         isAdmin={isAdmin}
+        canChangeLogo={canChangeLogo}
       />
     </header>
   );

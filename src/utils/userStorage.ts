@@ -13,6 +13,7 @@ export const ADMIN_PERMISSIONS: UserPermissions = {
   canExportPrint: true,
   canViewStats: true,
   canManageUsers: true,
+  canChangeLogo: true,
 };
 
 export const RECORDER_PERMISSIONS: UserPermissions = {
@@ -25,6 +26,7 @@ export const RECORDER_PERMISSIONS: UserPermissions = {
   canExportPrint: true,
   canViewStats: true,
   canManageUsers: false,
+  canChangeLogo: false,
 };
 
 export const VIEWER_PERMISSIONS: UserPermissions = {
@@ -37,6 +39,7 @@ export const VIEWER_PERMISSIONS: UserPermissions = {
   canExportPrint: true,
   canViewStats: true,
   canManageUsers: false,
+  canChangeLogo: false,
 };
 
 export const DEFAULT_USERS: AppUser[] = [
@@ -135,6 +138,12 @@ export const PERMISSION_DEFINITIONS: {
     description: 'អាចបន្ថែម កែប្រែ និងចាត់ចែងសិទ្ធិប្រើប្រាស់អ្នកដទៃ',
     category: 'admin',
   },
+  {
+    key: 'canChangeLogo',
+    label: 'ប្តូររូបសញ្ញា Logo (Admin)',
+    description: 'អាចផ្លាស់ប្តូរ ឬកំណត់រូបសញ្ញា Logo ផ្ទាល់ខ្លួនរបស់ប្រព័ន្ធ',
+    category: 'admin',
+  },
 ];
 
 export const DEFAULT_ADMIN_PIN = '1234';
@@ -150,11 +159,19 @@ export function getStoredUsers(): AppUser[] {
     if (Array.isArray(parsed) && parsed.length > 0) {
       let needsSave = false;
       const verified = parsed.map((u: AppUser) => {
+        let updatedUser = { ...u };
         if (u.role === 'ADMIN' && (!u.pin || u.pin.trim() === '')) {
           needsSave = true;
-          return { ...u, pin: DEFAULT_ADMIN_PIN };
+          updatedUser.pin = DEFAULT_ADMIN_PIN;
         }
-        return u;
+        if (updatedUser.permissions && updatedUser.permissions.canChangeLogo === undefined) {
+          needsSave = true;
+          updatedUser.permissions = {
+            ...updatedUser.permissions,
+            canChangeLogo: updatedUser.role === 'ADMIN',
+          };
+        }
+        return updatedUser;
       });
       if (needsSave) {
         localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(verified));

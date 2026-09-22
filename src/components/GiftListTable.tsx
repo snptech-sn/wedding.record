@@ -574,19 +574,20 @@ export const GiftListTable: React.FC<GiftListTableProps> = ({
                           <button
                             type="button"
                             onClick={() => onEditGift(gift)}
-                            className="px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg flex items-center gap-1 cursor-pointer"
+                            className="px-3 py-1.5 min-h-[36px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl flex items-center gap-1.5 cursor-pointer active:scale-98"
                           >
-                            <Edit2 className="w-3 h-3 text-slate-600 dark:text-slate-400" />
-                            <span>កែ</span>
+                            <Edit2 className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                            <span>កែប្រែ</span>
                           </button>
                         )}
                         {canDeleteGift && (
                           <button
                             type="button"
                             onClick={() => onDeleteGift(gift.id)}
-                            className="p-1 text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-lg cursor-pointer"
+                            className="p-2 min-w-[36px] min-h-[36px] flex items-center justify-center text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl cursor-pointer transition-colors"
+                            title="លុបចំណងដៃ"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         )}
                       </div>
