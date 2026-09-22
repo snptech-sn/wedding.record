@@ -113,20 +113,20 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Top golden-rose accent line */}
       <div className="h-1.5 bg-gradient-to-r from-rose-600 via-amber-500 to-rose-600 w-full" />
 
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-3">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-2.5 sm:py-3">
+        <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
           
           {/* Left Column: Brand & Event Selector */}
-          <div className="flex flex-wrap items-center justify-between gap-2.5">
-            <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex flex-wrap sm:flex-nowrap items-center justify-between xl:justify-start gap-2.5 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               {/* Clickable Logo with Hover Badge ONLY if permitted by Admin */}
               {canChangeLogo ? (
                 <div
                   onClick={() => setLogoModalOpen(true)}
                   title="ចុចដើម្បីប្តូររូប Logo ផ្ទាល់ខ្លួន (មានការអនុញ្ញាតពី Admin)"
-                  className="relative group cursor-pointer"
+                  className="relative group cursor-pointer shrink-0"
                 >
-                  <WeddingLogo className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-xs transition-transform group-hover:scale-105" />
+                  <WeddingLogo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-xs transition-transform group-hover:scale-105" />
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-xs opacity-75 group-hover:opacity-100 transition-opacity">
                     <Camera className="w-2.5 h-2.5" />
                   </div>
@@ -134,24 +134,24 @@ export const Header: React.FC<HeaderProps> = ({
               ) : (
                 <div
                   title="រូបសញ្ញា Logo កម្មវិធី (សិទ្ធិកែប្រែត្រូវអនុញ្ញាតដោយ Admin)"
-                  className="relative cursor-default"
+                  className="relative cursor-default shrink-0"
                 >
-                  <WeddingLogo className="w-10 h-10 sm:w-11 sm:h-11 drop-shadow-xs" />
+                  <WeddingLogo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-xs" />
                 </div>
               )}
               <div>
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <h1 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <h1 className="text-base sm:text-lg lg:text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
                     កត់ត្រា
                   </h1>
-                  <span className="text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100/80 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200/60 dark:border-rose-800/40">
+                  <span className="text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100/80 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200/60 dark:border-rose-800/40 whitespace-nowrap">
                     Wedding Record System
                   </span>
                   {canChangeLogo && (
                     <button
                       type="button"
                       onClick={() => setLogoModalOpen(true)}
-                      className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-rose-700 dark:text-rose-300 hover:text-rose-900 hover:bg-rose-100/80 dark:hover:bg-rose-950/60 rounded-md transition-colors cursor-pointer border border-dashed border-rose-300 dark:border-rose-800/70"
+                      className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-rose-700 dark:text-rose-300 hover:text-rose-900 hover:bg-rose-100/80 dark:hover:bg-rose-950/60 rounded-md transition-colors cursor-pointer border border-dashed border-rose-300 dark:border-rose-800/70 shrink-0"
                       title="ប្តូររូប Logo របស់អ្នក (មានសិទ្ធិពី Admin)"
                     >
                       <Upload className="w-2.5 h-2.5 text-rose-500" />
@@ -167,17 +167,17 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Event Dropdown */}
             {currentEvent && (
-              <div className="relative">
+              <div className="relative shrink-0">
                 <button
                   type="button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="inline-flex items-center gap-1.5 sm:gap-2 h-9 px-3 rounded-xl text-xs sm:text-sm font-medium bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100/80 dark:hover:bg-rose-900/50 border border-rose-200/80 dark:border-rose-900/60 text-rose-900 dark:text-rose-200 transition-all shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 h-9 px-2.5 sm:px-3 rounded-xl text-xs sm:text-sm font-medium bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100/80 dark:hover:bg-rose-900/50 border border-rose-200/80 dark:border-rose-900/60 text-rose-900 dark:text-rose-200 transition-all shadow-2xs cursor-pointer shrink-0"
                 >
                   <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse shrink-0" />
-                  <span className="max-w-[140px] sm:max-w-[200px] truncate font-semibold">
+                  <span className="max-w-[130px] sm:max-w-[180px] lg:max-w-[220px] truncate font-semibold">
                     {currentEvent.title}
                   </span>
-                  <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-700 dark:text-rose-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-700 dark:text-rose-400 shrink-0 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {dropdownOpen && (
@@ -274,12 +274,12 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Right Column: Clean, Grouped & Beautifully Organized Actions Toolbar */}
-          <div className="flex items-center justify-end gap-1.5 sm:gap-2 flex-wrap lg:flex-nowrap">
+          <div className="flex items-center justify-start sm:justify-end gap-1.5 sm:gap-2 flex-wrap">
             
             {/* Group 0: Cloud Sync Status Indicator (Only visible to Admin) */}
             {isAdmin && (
               <div
-                className={`inline-flex items-center gap-1.5 h-9 px-2.5 rounded-xl border text-xs font-medium transition-all shadow-2xs ${
+                className={`inline-flex items-center gap-1.5 h-9 px-2 sm:px-2.5 rounded-xl border text-xs font-medium transition-all shadow-2xs shrink-0 ${
                   isCloudConnected
                     ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300'
                     : 'bg-rose-50/80 dark:bg-rose-950/40 border-rose-200/80 dark:border-rose-800/60 text-rose-800 dark:text-rose-300'
@@ -297,8 +297,8 @@ export const Header: React.FC<HeaderProps> = ({
                 ) : (
                   <CloudOff className="w-4 h-4 text-rose-500 shrink-0" />
                 )}
-                <span className="hidden sm:inline font-semibold">
-                  {isCloudSyncing ? 'កំពុង Sync...' : isCloudConnected ? 'Cloud Sync' : 'Cloud Offline'}
+                <span className="hidden xl:inline font-semibold">
+                  {isCloudSyncing ? 'កំពុង Sync...' : isCloudConnected ? 'Cloud' : 'Offline'}
                 </span>
                 {onSyncCloud && (
                   <button
@@ -321,16 +321,16 @@ export const Header: React.FC<HeaderProps> = ({
               title="ចុចដើម្បីមើលរបាយការណ៍សរុបគ្រប់កម្មវិធីទាំងអស់"
               className="inline-flex items-center gap-1.5 sm:gap-2 h-9 px-2 sm:px-2.5 text-xs font-medium text-slate-800 dark:text-slate-200 bg-amber-50/90 dark:bg-amber-950/30 hover:bg-amber-100/80 dark:hover:bg-amber-900/40 border border-amber-200/80 dark:border-amber-800/60 rounded-xl transition-all shadow-2xs group cursor-pointer active:scale-98 shrink-0"
             >
-              <div className="w-6 h-6 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-2xs">
+              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-2xs">
                 <TrendingUp className="w-3.5 h-3.5" />
               </div>
               <div className="flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
-                <span className="font-semibold text-amber-900 dark:text-amber-300 hidden xl:inline">សរុប:</span>
+                <span className="font-semibold text-amber-900 dark:text-amber-300 hidden 2xl:inline">សរុប:</span>
                 {canViewStats ? (
                   <>
                     <span className="font-bold text-emerald-700 dark:text-emerald-400">{formatCurrency(allTimeStats.totalPaidUSD, 'USD')}</span>
-                    <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
-                    <span className="font-bold text-blue-700 dark:text-blue-400 hidden sm:inline">{formatCurrency(allTimeStats.totalPaidKHR, 'KHR')}</span>
+                    <span className="text-slate-300 dark:text-slate-600 hidden xl:inline">•</span>
+                    <span className="font-bold text-blue-700 dark:text-blue-400 hidden xl:inline">{formatCurrency(allTimeStats.totalPaidKHR, 'KHR')}</span>
                   </>
                 ) : (
                   <span className="font-medium text-slate-400">***</span>
@@ -342,21 +342,21 @@ export const Header: React.FC<HeaderProps> = ({
             <PWAInstallButton variant="header" />
 
             {/* Group 2: Tools & Export (Desktop Segmented Toolbar) */}
-            <div className="hidden sm:inline-flex items-center h-9 p-0.5 bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-xl text-xs shadow-2xs">
+            <div className="hidden sm:inline-flex items-center h-9 p-0.5 bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-xl text-xs shadow-2xs shrink-0">
               {onSelectMainTab && (
                 <>
                   <button
                     type="button"
                     onClick={() => onSelectMainTab(activeMainTab === 'ANALYTICS' ? 'RECORDS' : 'ANALYTICS')}
                     title="ផ្ទាំងទិន្នន័យក្រាហ្វិក (Bar & Pie Charts)"
-                    className={`inline-flex items-center gap-1.5 h-full px-2.5 py-1 font-semibold rounded-lg transition-all cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 h-full px-2 sm:px-2.5 py-1 font-semibold rounded-lg transition-all cursor-pointer ${
                       activeMainTab === 'ANALYTICS'
                         ? 'bg-rose-600 text-white shadow-2xs'
                         : 'text-amber-800 dark:text-amber-300 hover:text-amber-900 hover:bg-white dark:hover:bg-slate-700/80'
                     }`}
                   >
                     <BarChart3 className={`w-3.5 h-3.5 ${activeMainTab === 'ANALYTICS' ? 'text-white' : 'text-amber-600 dark:text-amber-400'}`} />
-                    <span className="hidden md:inline">ក្រាហ្វិក</span>
+                    <span className="hidden xl:inline">ក្រាហ្វិក</span>
                   </button>
                   <div className="w-px h-3.5 bg-slate-200 dark:bg-slate-700 self-center" />
                 </>
@@ -367,20 +367,20 @@ export const Header: React.FC<HeaderProps> = ({
                     type="button"
                     onClick={onOpenPrintView}
                     title="បោះពុម្ពសៀវភៅចំណងដៃ"
-                    className="inline-flex items-center gap-1.5 h-full px-2.5 py-1 font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-700/80 rounded-lg transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 h-full px-2 sm:px-2.5 py-1 font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-700/80 rounded-lg transition-all cursor-pointer"
                   >
                     <Printer className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-                    <span className="hidden md:inline">បោះពុម្ព</span>
+                    <span className="hidden xl:inline">បោះពុម្ព</span>
                   </button>
                   <div className="w-px h-3.5 bg-slate-200 dark:bg-slate-700 self-center" />
                   <button
                     type="button"
                     onClick={onExportCSV}
                     title="ទាញយកជាឯកសារ Excel / CSV"
-                    className="inline-flex items-center gap-1.5 h-full px-2.5 py-1 font-medium text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-white dark:hover:bg-slate-700/80 rounded-lg transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 h-full px-2 sm:px-2.5 py-1 font-medium text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:bg-white dark:hover:bg-slate-700/80 rounded-lg transition-all cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <span className="hidden md:inline">Excel</span>
+                    <span className="hidden xl:inline">Excel</span>
                   </button>
                   <div className="w-px h-3.5 bg-slate-200 dark:bg-slate-700 self-center" />
                 </>
@@ -391,10 +391,10 @@ export const Header: React.FC<HeaderProps> = ({
                     type="button"
                     onClick={onOpenMapsExplorer}
                     title="រុករកទីតាំងសាល & សេវាកម្មក្បែរពិធីជាមួយ Google Maps"
-                    className="inline-flex items-center gap-1.5 h-full px-2.5 py-1 font-semibold text-emerald-700 dark:text-emerald-300 hover:bg-white dark:hover:bg-slate-700/80 rounded-lg transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 h-full px-2 sm:px-2.5 py-1 font-semibold text-emerald-700 dark:text-emerald-300 hover:bg-white dark:hover:bg-slate-700/80 rounded-lg transition-all cursor-pointer"
                   >
                     <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <span className="hidden lg:inline">Google Maps</span>
+                    <span className="hidden 2xl:inline">Maps</span>
                   </button>
                   <div className="w-px h-3.5 bg-slate-200 dark:bg-slate-700 self-center" />
                 </>
@@ -406,7 +406,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className="inline-flex items-center gap-1.5 h-full px-2 py-1 font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-white dark:hover:bg-slate-700/80 rounded-lg transition-all cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span className="hidden xl:inline">គំរូ</span>
+                <span className="hidden 2xl:inline">គំរូ</span>
               </button>
             </div>
 
@@ -513,11 +513,11 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Group 3: User Profile Switcher & Role */}
-            <div className="relative">
+            <div className="relative shrink-0">
               <button
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="inline-flex items-center gap-2 h-9 px-2.5 text-xs font-medium bg-slate-100/90 dark:bg-slate-800/90 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl transition-all cursor-pointer text-slate-800 dark:text-slate-200 shadow-2xs active:scale-98"
+                className="inline-flex items-center gap-1.5 sm:gap-2 h-9 px-2 sm:px-2.5 text-xs font-medium bg-slate-100/90 dark:bg-slate-800/90 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl transition-all cursor-pointer text-slate-800 dark:text-slate-200 shadow-2xs active:scale-98 shrink-0"
                 title="ប្តូរគណនី ឬ មើលសិទ្ធិប្រើប្រាស់"
               >
                 <div className={`w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 text-white shadow-2xs ${
@@ -535,15 +535,15 @@ export const Header: React.FC<HeaderProps> = ({
                     currentUser?.fullName?.charAt(0) || 'U'
                   )}
                 </div>
-                <div className="text-left hidden sm:block">
-                  <div className="font-semibold leading-none text-slate-900 dark:text-white max-w-[100px] truncate text-xs">
+                <div className="text-left hidden md:block">
+                  <div className="font-semibold leading-none text-slate-900 dark:text-white max-w-[85px] lg:max-w-[110px] truncate text-xs">
                     {currentUser?.fullName || 'អ្នកប្រើប្រាស់'}
                   </div>
                   <div className="text-[9.5px] text-rose-600 dark:text-rose-400 font-medium leading-none mt-0.5 truncate">
                     {currentUser?.roleLabel || currentUser?.role || 'សិទ្ធិ'}
                   </div>
                 </div>
-                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 shrink-0 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {/* User Switcher Dropdown */}
@@ -704,14 +704,14 @@ export const Header: React.FC<HeaderProps> = ({
               type="button"
               onClick={onOpenAdminModal}
               title="កំណត់សិទ្ធិ & គ្រប់គ្រងអ្នកប្រើ (Admin Panel)"
-              className={`inline-flex items-center gap-1.5 h-9 px-2.5 sm:px-3 text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer active:scale-98 ${
+              className={`inline-flex items-center gap-1.5 h-9 px-2 sm:px-2.5 text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer active:scale-98 shrink-0 ${
                 canManageUsers
                   ? 'bg-rose-50/90 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 hover:bg-rose-100/80 border border-rose-200/80 dark:border-rose-900/60'
                   : 'bg-slate-100/90 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200/80 border border-slate-200/80 dark:border-slate-700/80'
               }`}
             >
               <ShieldCheck className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
-              <span className="hidden lg:inline">Admin</span>
+              <span className="hidden xl:inline">Admin</span>
             </button>
 
             {/* Group 5: Theme Mode Toggle Button */}
@@ -723,9 +723,9 @@ export const Header: React.FC<HeaderProps> = ({
               className="inline-flex items-center justify-center w-9 h-9 text-slate-600 dark:text-amber-400 bg-slate-100/90 dark:bg-slate-800/90 hover:bg-slate-200/80 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl transition-all shadow-2xs cursor-pointer active:scale-98 shrink-0"
             >
               {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-amber-400 fill-amber-400/20" />
+                <Sun className="w-4 h-4 text-amber-400 fill-amber-400/20 shrink-0" />
               ) : (
-                <Moon className="w-4 h-4 text-slate-600" />
+                <Moon className="w-4 h-4 text-slate-600 shrink-0" />
               )}
             </button>
 
