@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Outer Gold Ring Gradient -->
+    <linearGradient id="goldBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C158" />
+      <stop offset="25%" stop-color="#FDF3CD" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="75%" stop-color="#996515" />
+      <stop offset="100%" stop-color="#C59B27" />
+    </linearGradient>
+
+    <!-- Inner Background Glow -->
+    <radialGradient id="innerBg" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="75%" stop-color="#FFFDF7" />
+      <stop offset="100%" stop-color="#FFF9ED" />
+    </radialGradient>
+
+    <!-- Crimson Heart Arch Gradient -->
+    <linearGradient id="crimsonHeart" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D81B43" />
+      <stop offset="50%" stop-color="#B01334" />
+      <stop offset="100%" stop-color="#780620" />
+    </linearGradient>
+
+    <!-- Metallic Gold Ring Gradients -->
+    <linearGradient id="ringGold1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEFA6" />
+      <stop offset="40%" stop-color="#DDA92B" />
+      <stop offset="80%" stop-color="#9C6B10" />
+      <stop offset="100%" stop-color="#E8BE53" />
+    </linearGradient>
+
+    <linearGradient id="ringGold2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3BA" />
+      <stop offset="45%" stop-color="#E2B438" />
+      <stop offset="85%" stop-color="#8F5E0C" />
+      <stop offset="100%" stop-color="#F5D77F" />
+    </linearGradient>
+
+    <!-- Laurel Leaves Gold Gradient -->
+    <linearGradient id="leafGold" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#E0B644" />
+      <stop offset="50%" stop-color="#FBE698" />
+      <stop offset="100%" stop-color="#AA791A" />
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#7A4B05" flood-opacity="0.16" />
+    </filter>
+  </defs>
+
+  <!-- Base Inner Circle Background -->
+  <circle cx="250" cy="250" r="236" fill="url(#innerBg)" />
+
+  <!-- Outer Double Gold Rim -->
+  <circle cx="250" cy="250" r="236" fill="none" stroke="url(#goldBorder)" stroke-width="14" />
+  <circle cx="250" cy="250" r="226" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.6" />
+
+  <!-- TOP EMBLEM GRAPHICS GROUP -->
+  <g id="emblem-graphics">
+    
+    <!-- Top Crimson Heart Arch -->
+    <path d="M 250 95 
+             C 215 45, 115 50, 110 150 
+             C 107 200, 145 245, 172 265 
+             C 160 235, 142 192, 146 152 
+             C 150 92, 222 88, 250 130 
+             C 278 88, 350 92, 354 152 
+             C 358 192, 340 235, 328 265 
+             C 355 245, 393 200, 390 150 
+             C 385 50, 285 45, 250 95 Z" 
+          fill="url(#crimsonHeart)" 
+          filter="url(#softShadow)" />
+
+    <!-- Golden Laurel Leaves Left -->
+    <g id="laurel-left" fill="url(#leafGold)">
+      <path d="M 72 250 C 95 245, 120 252, 138 266 C 118 268, 92 265, 72 250 Z" />
+      <path d="M 105 190 C 102 215, 118 240, 138 250 C 130 230, 125 205, 105 190 Z" />
+      <path d="M 130 215 C 142 235, 160 252, 185 260 C 165 250, 145 235, 130 215 Z" />
+      <path d="M 175 245 C 190 260, 215 270, 235 272 C 215 264, 195 252, 175 245 Z" />
+    </g>
+
+    <!-- Golden Laurel Leaves Right -->
+    <g id="laurel-right" fill="url(#leafGold)">
+      <path d="M 428 250 C 405 245, 380 252, 362 266 C 382 268, 408 265, 428 250 Z" />
+      <path d="M 395 190 C 398 215, 382 240, 362 250 C 370 230, 375 205, 395 190 Z" />
+      <path d="M 370 215 C 358 235, 340 252, 315 260 C 335 250, 355 235, 370 215 Z" />
+      <path d="M 325 245 C 310 260, 285 270, 265 272 C 285 264, 305 252, 325 245 Z" />
+    </g>
+
+    <!-- Document / Notepad Sheet -->
+    <g id="document-sheet" filter="url(#softShadow)">
+      <!-- Document Base with rounded corners -->
+      <path d="M 185 106 
+               L 288 106 
+               L 326 144 
+               L 326 248 
+               C 326 256, 320 262, 312 262 
+               L 185 262 
+               C 177 262, 171 256, 171 248 
+               L 171 120 
+               C 171 112, 177 106, 185 106 Z" 
+            fill="#FFFFFF" 
+            stroke="#6B0F24" 
+            stroke-width="9" 
+            stroke-linejoin="round" />
+      
+      <!-- Folded Corner Triangle -->
+      <path d="M 288 106 L 288 144 L 326 144 Z" 
+            fill="#F4EAEB" 
+            stroke="#6B0F24" 
+            stroke-width="8" 
+            stroke-linejoin="round" />
+
+      <!-- Horizontal Red Lines on Document -->
+      <line x1="202" y1="144" x2="272" y2="144" stroke="#8A132B" stroke-width="6.5" stroke-linecap="round" />
+      <line x1="202" y1="168" x2="298" y2="168" stroke="#8A132B" stroke-width="6.5" stroke-linecap="round" />
+      <line x1="202" y1="192" x2="298" y2="192" stroke="#8A132B" stroke-width="6.5" stroke-linecap="round" />
+      <line x1="202" y1="216" x2="265" y2="216" stroke="#8A132B" stroke-width="6.5" stroke-linecap="round" />
+
+      <!-- Red Heart on Document -->
+      <path d="M 230 236 
+               C 230 231, 222 225, 215 229 
+               C 207 234, 212 245, 230 255 
+               C 248 245, 253 234, 245 229 
+               C 238 225, 230 231, 230 236 Z" 
+            fill="#99142E" />
+    </g>
+
+    <!-- Interlocking Golden Wedding Rings -->
+    <g id="wedding-rings" filter="url(#softShadow)">
+      <!-- Left Ring Outer -->
+      <circle cx="282" cy="236" r="46" fill="none" stroke="url(#ringGold1)" stroke-width="12" />
+      <circle cx="282" cy="236" r="51" fill="none" stroke="#FFF7D1" stroke-width="1.5" stroke-opacity="0.8" />
+      
+      <!-- Right Ring Outer -->
+      <circle cx="328" cy="230" r="42" fill="none" stroke="url(#ringGold2)" stroke-width="12" />
+      <circle cx="328" cy="230" r="47" fill="none" stroke="#FFF7D1" stroke-width="1.5" stroke-opacity="0.8" />
+
+      <!-- Interlock Arc Overlay for 3D Over-Under effect -->
+      <path d="M 296 198 A 46 46 0 0 1 324 224" fill="none" stroke="url(#ringGold1)" stroke-width="12" stroke-linecap="round" />
+      <path d="M 296 198 A 46 46 0 0 1 324 224" fill="none" stroke="#FFF7D1" stroke-width="1.5" stroke-linecap="round" />
+    </g>
+  </g>
+
+  <!-- LOWER TEXT AND TYPOGRAPHY SECTION -->
+  <g id="typography-section">
+    <!-- Golden Diamond Accent above 'ត្ត' -->
+    <polygon points="250,265 259,276 250,287 241,276" fill="url(#leafGold)" />
+
+    <!-- Khmer Word: កត់ត្រា (Crisp Typography with Kantumruy Pro) -->
+    <text x="250" y="360" 
+          text-anchor="middle" 
+          font-family="'Kantumruy Pro', 'Battambang', system-ui, sans-serif" 
+          font-size="68" 
+          font-weight="800" 
+          letter-spacing="2" 
+          fill="#640A1F" 
+          filter="url(#softShadow)">
+      កត់ត្រា
+    </text>
+
+    <!-- Small Heart Dot under ត្រ -->
+    <path d="M 250 374 
+             C 250 371, 245 367, 240 370 
+             C 235 373, 238 381, 250 388 
+             C 262 381, 265 373, 260 370 
+             C 255 367, 250 371, 250 374 Z" 
+          fill="#8F0D27" />
+
+    <!-- Golden Divider Bar with Central Red Heart -->
+    <g id="divider-bar">
+      <!-- Left Gold Line -->
+      <line x1="114" y1="388" x2="236" y2="388" stroke="url(#leafGold)" stroke-width="3" stroke-linecap="round" />
+      <!-- Right Gold Line -->
+      <line x1="264" y1="388" x2="386" y2="388" stroke="url(#leafGold)" stroke-width="3" stroke-linecap="round" />
+      <!-- Little Center Heart -->
+      <path d="M 250 383 
+               C 250 378, 242 372, 235 376 
+               C 227 381, 232 392, 250 401 
+               C 268 392, 273 381, 265 376 
+               C 258 372, 250 378, 250 383 Z" 
+            fill="#8F0D27" />
+    </g>
+
+    <!-- Subtitle: 'Wedding Record System' -->
+    <text x="250" y="420" 
+          text-anchor="middle" 
+          font-family="'Plus Jakarta Sans', system-ui, sans-serif" 
+          font-size="24" 
+          font-weight="700" 
+          letter-spacing="0.5" 
+          fill="#4A0E1B">
+      Wedding Record System
+    </text>
+  </g>
+</svg>
