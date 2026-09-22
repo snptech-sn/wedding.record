@@ -97,3 +97,16 @@ export interface AppUser {
   createdAt: string;
 }
 
+export type ChatRole = 'user' | 'model';
+
+export type ChatbotPersonaRole = 'ceremony_advisor' | 'gift_analyst' | 'blessing_writer';
+
+export interface ChatMessage {
+  id: string;
+  role: ChatRole;
+  content: string;
+  timestamp: string;
+  modelUsed?: string;
+  isError?: boolean;
+}
+

@@ -51,6 +51,7 @@ interface HeaderProps {
   onOpenAllTimeSummary: () => void;
   onOpenAdminModal: () => void;
   onOpenChangePin?: () => void;
+  onOpenGeminiChat?: () => void;
   onSwitchUser: (userId: string) => void;
 }
 
@@ -77,6 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAllTimeSummary,
   onOpenAdminModal,
   onOpenChangePin,
+  onOpenGeminiChat,
   onSwitchUser,
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -259,8 +261,20 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </button>
 
-            {/* Group 1.5: PWA Install to Home Screen Button */}
+            {/* Group 1.5: PWA Install & Gemini AI Chatbot Button */}
             <PWAInstallButton variant="header" />
+
+            {onOpenGeminiChat && (
+              <button
+                type="button"
+                onClick={onOpenGeminiChat}
+                title="ជំនួយការ AI Gemini Chatbot (ឆ្លើយសំណួរ វិភាគចំណងដៃ និងតែងសារជូនពរ)"
+                className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 py-1 text-xs font-bold text-white bg-gradient-to-r from-rose-600 via-rose-700 to-amber-600 hover:from-rose-500 hover:to-amber-500 rounded-xl shadow-xs hover:shadow-md transition-all duration-150 active:scale-95 cursor-pointer shrink-0"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+                <span className="tracking-wide">Gemini AI</span>
+              </button>
+            )}
 
             {/* Group 2: Tools & Export (Desktop Segmented Toolbar) */}
             <div className="hidden sm:inline-flex items-center h-9 p-0.5 bg-slate-100/90 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 rounded-xl text-xs shadow-2xs shrink-0">
@@ -332,6 +346,19 @@ export const Header: React.FC<HeaderProps> = ({
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)} />
                   <div className="absolute right-0 mt-1.5 w-56 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-1.5 z-50 animate-in fade-in zoom-in-95 text-xs">
+                    {onOpenGeminiChat && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          onOpenGeminiChat();
+                        }}
+                        className="w-full text-left px-3 py-2 flex items-center gap-2 font-bold text-rose-700 dark:text-rose-300 bg-rose-50/80 dark:bg-rose-950/40 hover:bg-rose-100/90 rounded-none mb-1 transition-colors"
+                      >
+                        <Sparkles className="w-4 h-4 text-amber-500" />
+                        <span>ជំនួយការ AI Gemini Chatbot</span>
+                      </button>
+                    )}
                     <PWAInstallButton variant="menuItem" className="mb-1" />
                     {onSelectMainTab && (
                       <button

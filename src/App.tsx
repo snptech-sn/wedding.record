@@ -44,6 +44,7 @@ import { AllTimeSummaryModal } from './components/AllTimeSummaryModal';
 import { AdminUserModal } from './components/AdminUserModal';
 import { AdminPinModal, PinModalAction } from './components/AdminPinModal';
 import { VenueMapsExplorerModal } from './components/VenueMapsExplorerModal';
+import { GeminiChatModal, GeminiFloatingChatButton } from './components/GeminiChatModal';
 import { DataVisualizationView } from './components/DataVisualizationView';
 import { ThemeMode, getInitialTheme, applyTheme } from './utils/theme';
 import { CheckCircle2, Heart, Plus, Sparkles, ShieldAlert, BarChart3, TableProperties } from 'lucide-react';
@@ -70,6 +71,7 @@ export default function App() {
   const [pinModalAction, setPinModalAction] = useState<PinModalAction>('OPEN_ADMIN_PANEL');
   const [pinTargetUser, setPinTargetUser] = useState<AppUser | null>(null);
   const [activeMainTab, setActiveMainTab] = useState<'RECORDS' | 'ANALYTICS'>('RECORDS');
+  const [isGeminiChatOpen, setIsGeminiChatOpen] = useState(false);
 
   // Cloud Firestore Status
   const [isCloudConnected, setIsCloudConnected] = useState<boolean>(true);
@@ -701,6 +703,7 @@ export default function App() {
         onOpenAllTimeSummary={() => setIsAllTimeModalOpen(true)}
         onOpenAdminModal={handleOpenAdminModal}
         onOpenChangePin={handleOpenChangePinModal}
+        onOpenGeminiChat={() => setIsGeminiChatOpen(true)}
         onSwitchUser={handleSwitchUser}
       />
 
@@ -909,6 +912,20 @@ export default function App() {
         onClose={() => setIsMapsExplorerOpen(false)}
         currentEvent={currentEvent}
         onSelectVenueForEvent={handleSelectVenueForCurrentEvent}
+      />
+
+      {/* Floating Gemini AI Chatbot Button */}
+      <GeminiFloatingChatButton
+        isOpen={isGeminiChatOpen}
+        onClick={() => setIsGeminiChatOpen(true)}
+      />
+
+      {/* Gemini AI Multi-turn Chatbot Modal */}
+      <GeminiChatModal
+        isOpen={isGeminiChatOpen}
+        onClose={() => setIsGeminiChatOpen(false)}
+        currentEvent={currentEvent}
+        stats={stats}
       />
 
       {/* Toast Notification */}
