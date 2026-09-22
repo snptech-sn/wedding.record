@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { WeddingLogo } from './WeddingLogo';
-import { LogoUploadModal } from './LogoUploadModal';
 import { EventItem, GiftRecord, SummaryStats } from '../types';
 import { formatCurrency, formatDateKhmer, formatDateTimeKhmer, PAYMENT_METHOD_LABELS, PAYMENT_STATUS_LABELS } from '../utils/formatters';
-import { Printer, ArrowLeft, Heart, Upload } from 'lucide-react';
+import { Printer, ArrowLeft, Heart } from 'lucide-react';
 
 interface PrintViewProps {
   currentEvent: EventItem;
@@ -20,8 +19,6 @@ export const PrintView: React.FC<PrintViewProps> = ({
   isAdmin = false,
   onClose,
 }) => {
-  const [logoModalOpen, setLogoModalOpen] = useState(false);
-
   const handlePrint = () => {
     window.print();
   };
@@ -41,18 +38,6 @@ export const PrintView: React.FC<PrintViewProps> = ({
         </button>
 
         <div className="flex items-center gap-3">
-          {isAdmin && (
-            <button
-              type="button"
-              onClick={() => setLogoModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-medium text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/50 border border-rose-200 dark:border-rose-800/60 rounded-xl transition-colors cursor-pointer"
-              title="ប្តូររូបភាព Logo សម្រាប់បោះពុម្ព (សម្រាប់ Admin ជាន់ខ្ពស់)"
-            >
-              <Upload className="w-4 h-4 text-rose-600 dark:text-rose-400" />
-              <span>ប្តូរ Logo</span>
-            </button>
-          )}
-
           <button
             type="button"
             onClick={handlePrint}
@@ -70,20 +55,7 @@ export const PrintView: React.FC<PrintViewProps> = ({
         {/* Decorative Top Frame for Khmer Ceremony with Official Logo */}
         <div className="text-center pb-6 border-b-2 border-rose-800">
           <div className="flex justify-center mb-3">
-            {isAdmin ? (
-              <div
-                onClick={() => setLogoModalOpen(true)}
-                title="ចុចដើម្បីប្តូររូប Logo ផ្ទាល់ខ្លួន (សម្រាប់ Admin ជាន់ខ្ពស់)"
-                className="cursor-pointer group relative"
-              >
-                <WeddingLogo className="w-24 h-24 sm:w-28 sm:h-28 print:w-24 print:h-24 drop-shadow-sm transition-transform group-hover:scale-105" />
-                <div className="no-print absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded-full bg-rose-600 text-white text-[10px] font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                  ប្តូរ
-                </div>
-              </div>
-            ) : (
-              <WeddingLogo className="w-24 h-24 sm:w-28 sm:h-28 print:w-24 print:h-24 drop-shadow-sm" />
-            )}
+            <WeddingLogo className="w-24 h-24 sm:w-28 sm:h-28 print:w-24 print:h-24 drop-shadow-sm" />
           </div>
           <div className="flex items-center justify-center gap-2 text-rose-800 mb-1">
             <span className="text-2xl sm:text-3xl font-bold tracking-tight">សៀវភៅកត់ត្រាចំណងដៃ</span>
@@ -209,13 +181,6 @@ export const PrintView: React.FC<PrintViewProps> = ({
         </div>
 
       </div>
-
-      {/* Logo Upload Modal */}
-      <LogoUploadModal
-        isOpen={logoModalOpen}
-        onClose={() => setLogoModalOpen(false)}
-        isAdmin={isAdmin}
-      />
 
     </div>
   );

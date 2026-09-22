@@ -13,7 +13,7 @@ export const ADMIN_PERMISSIONS: UserPermissions = {
   canExportPrint: true,
   canViewStats: true,
   canManageUsers: true,
-  canChangeLogo: true,
+  canChangeLogo: false,
 };
 
 export const RECORDER_PERMISSIONS: UserPermissions = {
@@ -138,12 +138,6 @@ export const PERMISSION_DEFINITIONS: {
     description: 'អាចបន្ថែម កែប្រែ និងចាត់ចែងសិទ្ធិប្រើប្រាស់អ្នកដទៃ',
     category: 'admin',
   },
-  {
-    key: 'canChangeLogo',
-    label: 'ប្តូររូបសញ្ញា Logo (Admin)',
-    description: 'អាចផ្លាស់ប្តូរ ឬកំណត់រូបសញ្ញា Logo ផ្ទាល់ខ្លួនរបស់ប្រព័ន្ធ',
-    category: 'admin',
-  },
 ];
 
 export const DEFAULT_ADMIN_PIN = '1234';
@@ -164,11 +158,11 @@ export function getStoredUsers(): AppUser[] {
           needsSave = true;
           updatedUser.pin = DEFAULT_ADMIN_PIN;
         }
-        if (updatedUser.permissions && updatedUser.permissions.canChangeLogo === undefined) {
+        if (updatedUser.permissions && updatedUser.permissions.canChangeLogo !== false) {
           needsSave = true;
           updatedUser.permissions = {
             ...updatedUser.permissions,
-            canChangeLogo: updatedUser.role === 'ADMIN',
+            canChangeLogo: false,
           };
         }
         return updatedUser;

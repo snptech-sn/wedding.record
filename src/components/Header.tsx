@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { WeddingLogo } from './WeddingLogo';
-import { LogoUploadModal } from './LogoUploadModal';
 import { PWAInstallButton } from './PWAInstallButton';
 import { AllTimeStats, EventItem, AppUser } from '../types';
 import { EVENT_TYPE_LABELS, formatCurrency, formatDateKhmer } from '../utils/formatters';
@@ -26,15 +25,6 @@ import {
   KeyRound,
   MoreVertical,
   Sliders,
-  Cloud,
-  CloudCheck,
-  CloudOff,
-  RefreshCw,
-  Compass,
-  Navigation,
-  Map,
-  Camera,
-  Upload,
   BarChart3,
 } from 'lucide-react';
 
@@ -50,7 +40,6 @@ interface HeaderProps {
   isCloudConnected?: boolean;
   isCloudSyncing?: boolean;
   onSyncCloud?: () => void;
-  onOpenMapsExplorer?: () => void;
   onToggleTheme: () => void;
   onSelectEvent: (eventId: string) => void;
   onOpenNewEventModal: () => void;
@@ -77,7 +66,6 @@ export const Header: React.FC<HeaderProps> = ({
   isCloudConnected = true,
   isCloudSyncing = false,
   onSyncCloud,
-  onOpenMapsExplorer,
   onToggleTheme,
   onSelectEvent,
   onOpenNewEventModal,
@@ -94,7 +82,6 @@ export const Header: React.FC<HeaderProps> = ({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [logoModalOpen, setLogoModalOpen] = useState(false);
 
   const eventTypeMeta = currentEvent
     ? EVENT_TYPE_LABELS[currentEvent.eventType] || EVENT_TYPE_LABELS.OTHER
@@ -106,7 +93,6 @@ export const Header: React.FC<HeaderProps> = ({
   const canViewStats = currentUser?.permissions.canViewStats ?? true;
   const canManageUsers = currentUser?.permissions.canManageUsers ?? (currentUser?.role === 'ADMIN');
   const isAdmin = currentUser?.role === 'ADMIN';
-  const canChangeLogo = Boolean(isAdmin || currentUser?.permissions?.canChangeLogo);
 
   return (
     <header className="bg-white dark:bg-slate-900 border-b border-rose-100/80 dark:border-slate-800 shadow-xs sticky top-0 z-30 transition-colors duration-200">
@@ -119,45 +105,18 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Left Column: Brand & Event Selector */}
           <div className="flex flex-wrap sm:flex-nowrap items-center justify-between xl:justify-start gap-2.5 sm:gap-4">
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-              {/* Clickable Logo with Hover Badge ONLY if permitted by Admin */}
-              {canChangeLogo ? (
-                <div
-                  onClick={() => setLogoModalOpen(true)}
-                  title="ចុចដើម្បីប្តូររូប Logo ផ្ទាល់ខ្លួន (មានការអនុញ្ញាតពី Admin)"
-                  className="relative group cursor-pointer shrink-0"
-                >
-                  <WeddingLogo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-xs transition-transform group-hover:scale-105" />
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-xs opacity-75 group-hover:opacity-100 transition-opacity">
-                    <Camera className="w-2.5 h-2.5" />
-                  </div>
-                </div>
-              ) : (
-                <div
-                  title="រូបសញ្ញា Logo កម្មវិធី (សិទ្ធិកែប្រែត្រូវអនុញ្ញាតដោយ Admin)"
-                  className="relative cursor-default shrink-0"
-                >
-                  <WeddingLogo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-xs" />
-                </div>
-              )}
+              {/* Static Logo (Logo change disabled) */}
+              <div
+                title="រូបសញ្ញា Logo កម្មវិធី"
+                className="relative cursor-default shrink-0"
+              >
+                <WeddingLogo className="w-9 h-9 sm:w-11 sm:h-11 drop-shadow-xs" />
+              </div>
               <div>
                 <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                   <h1 className="text-base sm:text-lg lg:text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
                     កត់ត្រា
                   </h1>
-                  <span className="text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100/80 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200/60 dark:border-rose-800/40 whitespace-nowrap">
-                    Wedding Record System
-                  </span>
-                  {canChangeLogo && (
-                    <button
-                      type="button"
-                      onClick={() => setLogoModalOpen(true)}
-                      className="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-rose-700 dark:text-rose-300 hover:text-rose-900 hover:bg-rose-100/80 dark:hover:bg-rose-950/60 rounded-md transition-colors cursor-pointer border border-dashed border-rose-300 dark:border-rose-800/70 shrink-0"
-                      title="ប្តូររូប Logo របស់អ្នក (មានសិទ្ធិពី Admin)"
-                    >
-                      <Upload className="w-2.5 h-2.5 text-rose-500" />
-                      <span>ប្តូរ Logo</span>
-                    </button>
-                  )}
                 </div>
                 <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">
                   កម្មវិធីគ្រប់គ្រងចំណងដៃ • កត់ត្រាភ្ញៀវកិត្តិយស & របាយការណ៍
@@ -276,44 +235,6 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Right Column: Clean, Grouped & Beautifully Organized Actions Toolbar */}
           <div className="flex items-center justify-start sm:justify-end gap-1.5 sm:gap-2 flex-wrap">
             
-            {/* Group 0: Cloud Sync Status Indicator (Only visible to Admin) */}
-            {isAdmin && (
-              <div
-                className={`inline-flex items-center gap-1.5 h-9 px-2 sm:px-2.5 rounded-xl border text-xs font-medium transition-all shadow-2xs shrink-0 ${
-                  isCloudConnected
-                    ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-200/80 dark:border-emerald-800/60 text-emerald-800 dark:text-emerald-300'
-                    : 'bg-rose-50/80 dark:bg-rose-950/40 border-rose-200/80 dark:border-rose-800/60 text-rose-800 dark:text-rose-300'
-                }`}
-                title={
-                  isCloudConnected
-                    ? 'ទិន្នន័យត្រូវបានភ្ជាប់ និងរក្សាទុកនៅលើ Google Cloud Firestore (ពេលវេលាជាក់ស្តែង Real-time)'
-                    : 'កំពុងតភ្ជាប់ទៅកាន់ Cloud...'
-                }
-              >
-                {isCloudSyncing ? (
-                  <RefreshCw className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 animate-spin shrink-0" />
-                ) : isCloudConnected ? (
-                  <CloudCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                ) : (
-                  <CloudOff className="w-4 h-4 text-rose-500 shrink-0" />
-                )}
-                <span className="hidden xl:inline font-semibold">
-                  {isCloudSyncing ? 'កំពុង Sync...' : isCloudConnected ? 'Cloud' : 'Offline'}
-                </span>
-                {onSyncCloud && (
-                  <button
-                    type="button"
-                    onClick={onSyncCloud}
-                    disabled={isCloudSyncing}
-                    className="p-1 hover:bg-emerald-200/50 dark:hover:bg-emerald-800/50 rounded-md cursor-pointer transition-colors text-emerald-700 dark:text-emerald-300 disabled:opacity-50"
-                    title="ចុចដើម្បីធ្វើសមកាលកម្មទិន្នន័យទៅ Cloud ឡើងវិញ"
-                  >
-                    <RefreshCw className={`w-3 h-3 ${isCloudSyncing ? 'animate-spin' : ''}`} />
-                  </button>
-                )}
-              </div>
-            )}
-
             {/* Group 1: All-Time Summary Stat Quick Pill */}
             <button
               type="button"
@@ -385,20 +306,6 @@ export const Header: React.FC<HeaderProps> = ({
                   <div className="w-px h-3.5 bg-slate-200 dark:bg-slate-700 self-center" />
                 </>
               )}
-              {onOpenMapsExplorer && (
-                <>
-                  <button
-                    type="button"
-                    onClick={onOpenMapsExplorer}
-                    title="រុករកទីតាំងសាល & សេវាកម្មក្បែរពិធីជាមួយ Google Maps"
-                    className="inline-flex items-center gap-1.5 h-full px-2 sm:px-2.5 py-1 font-semibold text-emerald-700 dark:text-emerald-300 hover:bg-white dark:hover:bg-slate-700/80 rounded-lg transition-all cursor-pointer"
-                  >
-                    <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                    <span className="hidden 2xl:inline">Maps</span>
-                  </button>
-                  <div className="w-px h-3.5 bg-slate-200 dark:bg-slate-700 self-center" />
-                </>
-              )}
               <button
                 type="button"
                 onClick={onResetSampleData}
@@ -426,19 +333,6 @@ export const Header: React.FC<HeaderProps> = ({
                   <div className="fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)} />
                   <div className="absolute right-0 mt-1.5 w-56 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 py-1.5 z-50 animate-in fade-in zoom-in-95 text-xs">
                     <PWAInstallButton variant="menuItem" className="mb-1" />
-                    {canChangeLogo && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setMobileMenuOpen(false);
-                          setLogoModalOpen(true);
-                        }}
-                        className="w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-rose-700 dark:text-rose-300 font-semibold"
-                      >
-                        <Upload className="w-4 h-4 text-rose-600" />
-                        <span>ប្តូររូប Logo ប្រព័ន្ធ</span>
-                      </button>
-                    )}
                     {onSelectMainTab && (
                       <button
                         type="button"
@@ -454,19 +348,6 @@ export const Header: React.FC<HeaderProps> = ({
                       >
                         <BarChart3 className="w-4 h-4 text-amber-600" />
                         <span>ផ្ទាំងក្រាហ្វិក (Charts & Analytics)</span>
-                      </button>
-                    )}
-                    {onOpenMapsExplorer && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setMobileMenuOpen(false);
-                          onOpenMapsExplorer();
-                        }}
-                        className="w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-emerald-700 dark:text-emerald-400 font-semibold"
-                      >
-                        <MapPin className="w-4 h-4 text-emerald-600" />
-                        <span>Google Maps & ទីតាំង</span>
                       </button>
                     )}
                     {canExportPrint && (
@@ -756,28 +637,12 @@ export const Header: React.FC<HeaderProps> = ({
                 <Calendar className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                 <span>{formatDateKhmer(currentEvent.date)}</span>
               </div>
-              {currentEvent.location ? (
-                <button
-                  type="button"
-                  onClick={onOpenMapsExplorer}
-                  title="មើលផែនទី និងសេវាកម្មក្បែរទីតាំងនេះ (Google Maps)"
-                  className="flex items-center gap-1 text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 bg-emerald-50/80 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 px-2 py-0.5 rounded-lg border border-emerald-200/80 dark:border-emerald-800/60 transition-colors cursor-pointer"
-                >
-                  <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              {currentEvent.location && (
+                <div className="flex items-center gap-1 text-slate-600 dark:text-slate-300 bg-slate-100/80 dark:bg-slate-800/60 px-2 py-0.5 rounded-lg border border-slate-200/80 dark:border-slate-700/60">
+                  <MapPin className="w-3.5 h-3.5 text-rose-500 shrink-0" />
                   <span className="truncate max-w-xs font-medium">{currentEvent.location}</span>
-                  <Navigation className="w-2.5 h-2.5 opacity-60 ml-0.5 shrink-0" />
-                </button>
-              ) : onOpenMapsExplorer ? (
-                <button
-                  type="button"
-                  onClick={onOpenMapsExplorer}
-                  title="ស្វែងរក និងកំណត់ទីតាំងកម្មវិធីតាម Google Maps"
-                  className="flex items-center gap-1 text-slate-400 dark:text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors cursor-pointer text-[11px]"
-                >
-                  <Compass className="w-3.5 h-3.5" />
-                  <span>ស្វែងរកទីតាំង (Google Maps)</span>
-                </button>
-              ) : null}
+                </div>
+              )}
             </div>
             <div>
               <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-medium border ${eventTypeMeta.bg}`}>
@@ -788,14 +653,6 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         )}
       </div>
-
-      {/* Custom Logo Upload Modal */}
-      <LogoUploadModal
-        isOpen={logoModalOpen}
-        onClose={() => setLogoModalOpen(false)}
-        isAdmin={isAdmin}
-        canChangeLogo={canChangeLogo}
-      />
     </header>
   );
 };

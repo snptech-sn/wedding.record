@@ -20,7 +20,6 @@ import {
   Eye,
   Settings,
   ArrowRight,
-  Upload,
 } from 'lucide-react';
 
 interface AdminUserModalProps {
@@ -32,7 +31,6 @@ interface AdminUserModalProps {
   onDeleteUser: (userId: string) => void;
   onSwitchUser: (userId: string, enteredPin?: string) => boolean;
   onOpenChangePin?: (adminUser: AppUser) => void;
-  onOpenLogoModal?: () => void;
 }
 
 const ROLE_PRESET_OPTIONS: { role: UserRole; label: string; desc: string; badge: string }[] = [
@@ -71,7 +69,6 @@ export const AdminUserModal: React.FC<AdminUserModalProps> = ({
   onDeleteUser,
   onSwitchUser,
   onOpenChangePin,
-  onOpenLogoModal,
 }) => {
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState<boolean>(false);
@@ -330,18 +327,6 @@ export const AdminUserModal: React.FC<AdminUserModalProps> = ({
             </div>
 
             <div className="flex items-center gap-2">
-              {(currentUser.role === 'ADMIN' || currentUser.permissions?.canChangeLogo) && onOpenLogoModal && (
-                <button
-                  type="button"
-                  onClick={onOpenLogoModal}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-rose-900 dark:text-rose-200 bg-rose-100/90 dark:bg-rose-950/60 hover:bg-rose-200/90 rounded-xl border border-rose-300/80 dark:border-rose-800/60 transition-all cursor-pointer shadow-2xs"
-                  title="ប្តូររូបភាព Logo ប្រព័ន្ធ (សម្រាប់តែ Admin ឬអ្នកមានសិទ្ធិ)"
-                >
-                  <Upload className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
-                  <span>ប្តូរ Logo</span>
-                </button>
-              )}
-
               {currentUser.role === 'ADMIN' && onOpenChangePin && (
                 <button
                   type="button"

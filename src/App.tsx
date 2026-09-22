@@ -44,7 +44,6 @@ import { AllTimeSummaryModal } from './components/AllTimeSummaryModal';
 import { AdminUserModal } from './components/AdminUserModal';
 import { AdminPinModal, PinModalAction } from './components/AdminPinModal';
 import { VenueMapsExplorerModal } from './components/VenueMapsExplorerModal';
-import { LogoUploadModal } from './components/LogoUploadModal';
 import { DataVisualizationView } from './components/DataVisualizationView';
 import { ThemeMode, getInitialTheme, applyTheme } from './utils/theme';
 import { CheckCircle2, Heart, Plus, Sparkles, ShieldAlert, BarChart3, TableProperties } from 'lucide-react';
@@ -70,7 +69,6 @@ export default function App() {
   const [isPinModalOpen, setIsPinModalOpen] = useState(false);
   const [pinModalAction, setPinModalAction] = useState<PinModalAction>('OPEN_ADMIN_PANEL');
   const [pinTargetUser, setPinTargetUser] = useState<AppUser | null>(null);
-  const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
   const [activeMainTab, setActiveMainTab] = useState<'RECORDS' | 'ANALYTICS'>('RECORDS');
 
   // Cloud Firestore Status
@@ -703,7 +701,6 @@ export default function App() {
         onOpenAllTimeSummary={() => setIsAllTimeModalOpen(true)}
         onOpenAdminModal={handleOpenAdminModal}
         onOpenChangePin={handleOpenChangePinModal}
-        onOpenMapsExplorer={() => setIsMapsExplorerOpen(true)}
         onSwitchUser={handleSwitchUser}
       />
 
@@ -891,17 +888,8 @@ export default function App() {
           onDeleteUser={handleDeleteUserFromModal}
           onSwitchUser={handleSwitchUser}
           onOpenChangePin={handleOpenChangePinModal}
-          onOpenLogoModal={() => setIsLogoModalOpen(true)}
         />
       )}
-
-      {/* Admin Logo Upload Modal */}
-      <LogoUploadModal
-        isOpen={isLogoModalOpen}
-        onClose={() => setIsLogoModalOpen(false)}
-        isAdmin={currentUser?.role === 'ADMIN'}
-        canChangeLogo={currentUser?.role === 'ADMIN' || currentUser?.permissions?.canChangeLogo}
-      />
 
       {/* Mandatory Admin Security PIN & Change PIN Modal */}
       {pinTargetUser && (
